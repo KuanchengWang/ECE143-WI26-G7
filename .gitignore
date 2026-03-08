@@ -17,8 +17,8 @@ env/
 uv.lock
 
 # Dataset
-data/
-Airline_Delay_Cause.csv
+dataset/*
+*.csv
 
 #Results
-output*
+outputs/*
