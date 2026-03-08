@@ -87,7 +87,7 @@ class DelayCauseAnalysis:
                     fontweight='bold')
 
         ax.set_xlabel('Average Delay Duration per Incident (minutes)')
-        ax.set_title('Average Minutes per Delayed Flight', fontsize=14, fontweight='bold')
+        ax.set_title('Yearly Average Minutes per Delayed Flight (2013-23)', fontsize=14, fontweight='bold')
         ax.set_xlim(0, avg_per_cause.max() * 1.2)
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)

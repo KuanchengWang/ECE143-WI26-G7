@@ -102,12 +102,15 @@ class MonthlyDelayAnalysis:
             nas_ct = ('nas_ct', 'sum'),
             security_ct = ('security_ct', 'sum'),
             late_aircraft_ct = ('late_aircraft_ct', 'sum'),
+            year_min = ('year', 'min'),
+            year_max = ('year', 'max'),
         ).reset_index()
         monthly_min['month_name'] = monthly_min['month'].map(self.month_map)
 
         # compute avg minutes per incident for each cause
+        year_count = monthly_min['year_max'] - monthly_min['year_min'] + 1
         for min_col, ct_col in zip(self.cause_cols, self.count_cols):
-            monthly_min[min_col + '_avg'] = monthly_min[min_col] / monthly_min[ct_col].replace(0, np.nan)
+            monthly_min[min_col + '_avg'] = monthly_min[min_col] / (monthly_min[ct_col].replace(0, np.nan) * year_count)
 
         avg_cols = [c + '_avg' for c in self.cause_cols]
 

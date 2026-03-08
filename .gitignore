@@ -17,8 +17,8 @@ env/
 uv.lock
 
 # Dataset
-dataset/
+dataset/*
 *.csv
 
 #Results
-output*
+outputs/*
