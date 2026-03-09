@@ -47,7 +47,33 @@ The dataset contains U.S. airline operational records and delay-related fields t
 - late aircraft delay
 - airline-level performance
 - airport-level performance
-- time-based trends
+---
+
+## Project Structure
+
+```
+ECE143-WI26-G7/
+├── main_analysis.ipynb
+└── src/
+    ├── __pycache__/
+    ├── airport_analysis.py
+    ├── carrier_analysis.py
+    ├── cause_analysis.py
+    ├── constants.py
+    ├── day_of_week.py
+    ├── monthly_analysis.py
+    ├── preprocessing.py
+    └── yearly_change_analysis.py
+├── dataset/ (auto created when running code)
+├── outputs/ (auto created when running code)
+```
+
+### Directory Descriptions
+- **`main_analysis.ipynb`**: Main Jupyter notebook that orchestrates the entire analysis workflow.
+- **`src/`**: Source code directory with Python modules for data preprocessing, analysis functions, and constants.
+- **`dataset/`**: Contains the raw and cleaned airline delay datasets used for analysis.
+- **`outputs/`**: Directory for generated plots, figures, and analysis results.
+
 
 ---
 
