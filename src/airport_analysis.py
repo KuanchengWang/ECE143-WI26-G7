@@ -6,8 +6,8 @@ from matplotlib.colors import Normalize
 from src import constants
 
 class AirportDelayAnalysis:
-    def __init__(self, csv_file = constants.DATASET_PATH) -> None:
-        self.df = pd.read_csv(csv_file)
+    def __init__(self, df) -> None:
+        self.df = df if df is not None else pd.read_csv(constants.DATASET_PATH)
         self.agg_cols_dict = {
             'total_flights': ('arr_flights', 'sum'),
             'total_del15': ('arr_del15', 'sum'),

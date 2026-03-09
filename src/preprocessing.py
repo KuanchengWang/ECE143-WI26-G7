@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import kagglehub
 from pathlib import Path
@@ -14,6 +15,10 @@ class Preprocessing:
                            'nas_delay', 
                            'security_delay', 
                            'late_aircraft_delay']
+        
+    def make_dir(self):
+        for _d in [constants.DATASET_DIR, constants.SAVE_DIR]:
+            os.makedirs(_d, exist_ok=True)
         
     def download_data(self):
         try:
@@ -46,4 +51,7 @@ class Preprocessing:
     def save_data(self, filename = constants.DATASET_PATH):
         assert self.df is not None, "Dataframe is empty. Run load_data() and clean_data() first."
         self.df.to_csv(filename, index=False)
+
+    def get_datafrmame(self):
+        return self.df
 

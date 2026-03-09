@@ -6,8 +6,8 @@ from src import constants
 
 
 class MonthlyDelayAnalysis:
-    def __init__(self, csv_file = constants.DATASET_PATH) -> None:
-        self.df = pd.read_csv(csv_file)
+    def __init__(self, df) -> None:
+        self.df = df if df is not None else pd.read_csv(constants.DATASET_PATH)
         self.month_map = {
             1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun', 
             7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'

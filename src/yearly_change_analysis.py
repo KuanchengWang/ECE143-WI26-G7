@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 from src import constants
 
 class YearlyChangeAnalysis:
-    def __init__(self, csv_file = constants.DATASET_PATH) -> None:
-        self.df = pd.read_csv(csv_file)
+    def __init__(self, df) -> None:
+        self.df = df if df is not None else pd.read_csv(constants.DATASET_PATH)
         self.delay_min_cols = ['carrier_delay','weather_delay','nas_delay','security_delay','late_aircraft_delay']
         self.cause_labels = ['Carrier','Weather','NAS','Security','Late Aircraft']
 

@@ -5,8 +5,8 @@ from src import constants
 
 
 class DelayCauseAnalysis:
-    def __init__(self, csv_file = constants.DATASET_PATH) -> None:
-        self.df = pd.read_csv(csv_file)
+    def __init__(self, df):
+        self.df = df if df is not None else pd.read_csv(constants.DATASET_PATH)
         
         self.delay_cause_cols = ['carrier_ct','weather_ct','nas_ct','security_ct','late_aircraft_ct']
         
@@ -27,12 +27,12 @@ class DelayCauseAnalysis:
         })
 
         self.cause_colors = {
-        'Carrier': constants.PALETTE[0],
-        'Weather': constants.PALETTE[1],
-        'NAS': constants.PALETTE[2],
-        'Security': constants.PALETTE[3],
-        'Late Aircraft': constants.PALETTE[4],
-    }
+            'Carrier': constants.PALETTE[0],
+            'Weather': constants.PALETTE[1],
+            'NAS': constants.PALETTE[2],
+            'Security': constants.PALETTE[3],
+            'Late Aircraft': constants.PALETTE[4],
+        }
 
     def describe(self):
         return self.df[self.delay_cause_cols].describe().round(2)
