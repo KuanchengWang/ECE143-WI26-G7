@@ -5,7 +5,20 @@ from src import constants
 
 
 class DelayCauseAnalysis:
-    def __init__(self, df):
+    """Analyze and visualize the distribution of flight delay causes.
+    Attributes:
+        df (pd.DataFrame): DataFrame containing flight delay data.
+        delay_cause_cols (list): List of columns representing different delay causes.
+        cause_counts (pd.Series): Total count of delay incidents for each cause.
+        cause_minutes (pd.Series): Total delay minutes attributed to each cause.
+        cause_colors (dict): Mapping of delay causes to specific colors for visualization.
+    """
+    
+    def __init__(self, df = None):
+        """Initialize the DelayCauseAnalysis object.
+        Args:
+            df (pd.DataFrame): DataFrame containing flight delay data. If None, it will be loaded from the dataset path.
+        """
         self.df = df if df is not None else pd.read_csv(constants.DATASET_PATH)
         
         self.delay_cause_cols = ['carrier_ct','weather_ct','nas_ct','security_ct','late_aircraft_ct']
@@ -35,11 +48,18 @@ class DelayCauseAnalysis:
         }
 
     def describe(self):
-        return self.df[self.delay_cause_cols].describe().round(2)
+        """Provide a statistical summary of the delay cause data.
+        Returns:
+            pd.DataFrame: DataFrame containing the statistical summary for the delay cause metrics.
+        """
+        subset = self.df[self.delay_cause_cols]
+        assert not subset.empty, "No delay cause columns available for description"
+        return subset.describe().round(2)
     
     def plot_incidents_and_minutes(self):
-        # Overall Cause Distribution
+        """Plot side-by-side pie charts showing the distribution of delay incidents and total delay minutes by cause."""
         fig, ax = plt.subplots(1, 2, figsize=(12, 4))
+        assert not self.cause_counts.empty and not self.cause_minutes.empty, "Cause counts or minutes are empty, cannot plot"
         fig.suptitle('Flight Delay — Distribution by Cause (2013-23)', fontsize=14, fontweight='bold')
 
         sorted_cause_counts = self.cause_counts.sort_values(ascending=False)
@@ -70,8 +90,9 @@ class DelayCauseAnalysis:
         plt.show()
 
     def plot_avg_delay_per_delayed_flight(self):
-        # Bar
+        """Plot a horizontal bar chart showing the average delay duration per delayed flight for each cause."""
         avg_per_cause = (self.cause_minutes / self.cause_counts).sort_values(ascending=True) # type: ignore
+        assert not avg_per_cause.empty, "Average per cause is empty, cannot plot."
         color=[ self.cause_colors[c] for c in avg_per_cause.index ]
 
         fig, ax = plt.subplots(figsize=(10, 4))

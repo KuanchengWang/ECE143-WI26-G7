@@ -6,7 +6,17 @@ from src import constants
 
 
 class CarrierDelayAnalysis:
-    def __init__(self, df) -> None:
+    """Analyze and visualize delay patterns across carriers.
+    Attributes:
+        df (pd.DataFrame): DataFrame containing flight delay data.
+        agg_cols_dict (dict): Defines the aggregation operations for delay metrics.
+    """
+    
+    def __init__(self, df = None):
+        """Initialize the CarrierDelayAnalysis object.
+        Args:
+            df (pd.DataFrame): DataFrame containing flight delay data. If None, it will be loaded from the dataset path.
+        """
         self.df = df if df is not None else pd.read_csv(constants.DATASET_PATH)
         self.agg_cols_dict = {
             'total_flights': ('arr_flights', 'sum'),
@@ -16,7 +26,10 @@ class CarrierDelayAnalysis:
         }
 
     def get_carrier_df(self):
-        # Create aggregator for Carrier
+        """Aggregate the flight delay data by carrier.
+        Returns:
+            pd.DataFrame: DataFrame containing aggregated delay metrics for each carrier.
+        """
         ca_agg = self.df.groupby('carrier_name').agg(**self.agg_cols_dict).reset_index()
         ca_agg['delay_rate'] = ca_agg['total_delayed'] / ca_agg['total_flights'] * 100
         ca_agg['avg_delay_min'] = ca_agg['total_delay_min'] / ca_agg['total_delayed']
@@ -26,16 +39,24 @@ class CarrierDelayAnalysis:
         return ca_agg
 
     def describe(self):
+        """Provide a statistical summary of the aggregated carrier delay data.
+        Returns:
+            pd.DataFrame: DataFrame containing the statistical summary for the carrier delay metrics.
+        """
         ca = self.get_carrier_df()
+        assert not ca.empty, "Carrier DataFrame is empty, cannot describe"
         return ca.describe().round(2)
 
     def plot_carrier_profile_bubble(self):
+        """Plot a bubble chart of carrier delay profiles.
+        1. Darker color - higher cancellation rate
+        2. Bubble Size - Volume the carrier handles
+        3. Towards left - less delay rate
+        4. Towards bottom - less delay duration
+        """
         carrier_df = self.get_carrier_df()
+        assert not carrier_df.empty, "Carrier DataFrame is empty, nothing to plot"
         fig, ax = plt.subplots(figsize=(12, 8))
-        # 1. Darker color - higher cancellation rate
-        # 2. Bubble Size - Volume the carrier handles
-        # 3. Towards left - less delay rate
-        # 4. Towards bottom - less delay duration
         sc = ax.scatter(carrier_df['delay_rate'], 
                         carrier_df['avg_delay_min'],
                         s = carrier_df['bubble_size'], 

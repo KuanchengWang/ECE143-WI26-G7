@@ -1,3 +1,4 @@
+# Constants for the Airline Delay Analysis project
 DATASET_DIR = 'dataset/'
 SAVE_DIR = 'outputs/'
 DATASET_HANDLE = "sriharshaeedala/airline-delay"
