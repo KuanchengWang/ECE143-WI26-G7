@@ -6,8 +6,19 @@ from src import constants
 
 
 class MonthlyDelayAnalysis:
-    def __init__(self, csv_file = constants.DATASET_PATH) -> None:
-        self.df = pd.read_csv(csv_file)
+    """Analyze and visualize monthly trends in flight delays.
+    Attributes:
+        df (pd.DataFrame): The DataFrame containing flight delay data.
+        month_map (dict): Mapping of month numbers to month names for better visualization.
+        cause_colors (dict): Mapping of delay causes to specific colors for visualization.
+        cause_cols (list): List of columns representing delay minutes for each cause.
+        count_cols (list): List of columns representing delay incident counts for each cause.
+        cause_labels (list): List of human-readable labels for each delay cause.
+    """
+    
+    def __init__(self, df = None):
+        """Initialize the MonthlyDelayAnalysis object."""
+        self.df = df if df is not None else pd.read_csv(constants.DATASET_PATH)
         self.month_map = {
             1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun', 
             7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'
@@ -24,6 +35,7 @@ class MonthlyDelayAnalysis:
         self.cause_labels = ['Carrier', 'Weather', 'NAS', 'Security', 'Late Aircraft']
 
     def get_monthly_df(self):
+        """Aggregates the flight delay data on a monthly basis and computes delay rates."""
         monthly = self.df.groupby('month').agg(
             flights = ('arr_flights', 'mean'),
             del15 = ('arr_del15', 'mean'),
@@ -38,13 +50,17 @@ class MonthlyDelayAnalysis:
         return monthly
     
     def describe(self):
+        """Provides descriptive statistics of the monthly aggregated data."""
         monthly = self.get_monthly_df()
+        assert not monthly.empty, "monthly dataFrame is empty, cannot describe"
         return monthly.describe().round(2)
     
     def plot_delay_rate(self):
+        """Plots the monthly delay rate as a line chart with annotations."""
         monthly = self.get_monthly_df()
+        assert not monthly.empty, "monthly dataFrame is empty, cannot plot"
         fig, ax = plt.subplots(figsize=(12, 5))
-        # delay rate line
+        
         ax.plot(monthly['month_name'], 
                 monthly['delay_rate'],
                 color = constants.PALETTE[0], 
@@ -67,8 +83,10 @@ class MonthlyDelayAnalysis:
         plt.show()
 
     def plot_delay_incidents(self):
+        """Plots the monthly delay incidents by cause as a stacked bar chart."""
         monthly = self.get_monthly_df()
-        # delay counts bar
+        assert not monthly.empty, "monthly dataFrame is empty, cannot plot"
+
         fig, ax = plt.subplots(figsize=(12, 5))
         cause_cols = ['carrier','weather','nas','security','late_ac']
         cause_labels = ['Carrier','Weather','NAS','Security','Late Aircraft']
@@ -89,8 +107,7 @@ class MonthlyDelayAnalysis:
         plt.show()
 
     def plot_avg_duration_per_delayed_flight(self):
-        # avg delay minutes bar
-        # aggregate monthly with minute totals
+        """Plots the average delay duration per delayed flight by cause as a stacked bar chart."""
         monthly_min = self.df.groupby('month').agg(
             carrier_delay = ('carrier_delay', 'sum'),
             weather_delay = ('weather_delay', 'sum'),
@@ -106,6 +123,7 @@ class MonthlyDelayAnalysis:
             year_max = ('year', 'max'),
         ).reset_index()
         monthly_min['month_name'] = monthly_min['month'].map(self.month_map)
+        assert not monthly_min.empty, "monthly dataFrame is empty, cannot plot"
 
         # compute avg minutes per incident for each cause
         year_count = monthly_min['year_max'] - monthly_min['year_min'] + 1
