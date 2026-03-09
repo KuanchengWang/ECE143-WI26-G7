@@ -35,7 +35,7 @@ By structuring the analysis around these questions, the project provides a clear
 ## Dataset
 This project uses the **US Airline Dataset** from Kaggle:
 
-- **Dataset source:** [US Airline Dataset — Kaggle](https://www.kaggle.com/datasets/shaivyac/us-airline-dataset?resource=download)
+- **Dataset source:** [Flight Delay Data for U.S. Airports — Kaggle](https://www.kaggle.com/datasets/sriharshaeedala/airline-delay)
 
 The dataset contains U.S. airline operational records and delay-related fields that enable analysis across:
 
