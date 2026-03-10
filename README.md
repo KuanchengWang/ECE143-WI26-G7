@@ -64,6 +64,11 @@ ECE143-WI26-G7/
     ├── monthly_analysis.py
     ├── preprocessing.py
     └── yearly_change_analysis.py
+    └── regression_dataloader.py
+    └── regression_visualization.py
+    └── linear_regression_model.py
+    └── random_forest_model.py
+    └── xgboost_model.py
 ├── dataset/ (auto created when running code)
 ├── outputs/ (auto created when running code)
 ```
