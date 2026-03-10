@@ -4,3 +4,6 @@ SAVE_DIR = 'outputs/'
 DATASET_HANDLE = "sriharshaeedala/airline-delay"
 DATASET_PATH = 'dataset/Airline_Delay_Cause.csv'
 PALETTE = ['#2196F3','#FF5722','#4CAF50', '#FFC107','#FF9800', '#F1DB31']
+
+REGRESSION_FEATURE = ['month', 'carrier', 'airport']
+REGRESSION_TARGET= 'arr_delay' 
