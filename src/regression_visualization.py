@@ -24,7 +24,8 @@ def visualize_results(results, model_name):
     features = results['features']
     importance = results['feature_importance'] if 'feature_importance' in results else results['coefficients']
 
-    colors = ["#f9a410", "#ff460e", "#77e977"]
+    feature_colors = {'month': "#f9a410", 'carrier': "#ff460e", 'airport': "#77e977"}
+    colors = [feature_colors.get(f, "#2196F3") for f in features]
     ax.barh(features, importance, color=colors, alpha=0.8)
     ax.set_xlabel('Importance')
     if model_name == 'Linear Regression':
@@ -35,7 +36,7 @@ def visualize_results(results, model_name):
     ax.axvline(x=0, color='black', linestyle='-', linewidth=0.5)
     for i, imp in enumerate(importance):
         if model_name == 'Linear Regression':
-            if imp < 0: 
+            if imp < 0:
                 ax.text(imp, i, f'  {imp:.1f}', va='center', ha='right')
             else:
                 ax.text(imp, i, f'  {imp:.1f}', va='center', ha='left')
