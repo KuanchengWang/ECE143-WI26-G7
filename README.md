@@ -79,7 +79,19 @@ ECE143-WI26-G7/
 - **`dataset/`**: Contains the raw and cleaned airline delay datasets used for analysis.
 - **`outputs/`**: Directory for generated plots, figures, and analysis results.
 
+### Third-Party Modules
+- pandas
+- numpy
+- scikit-learn
+- xgboost
+- matplotlib
+- seaborn
+- kagglehub
 
+
+### How to Run Our Code
+1. Install all the packages listed in requirements.txt.
+2. Run the **`main_analysis.ipynb`** to generate all the analysis.
 ---
 
 ## Project Objectives
@@ -171,18 +183,11 @@ The carrier year-over-year percent change chart shows large swings across the ti
 
 This suggests carrier-related delays are highly sensitive to broader operational conditions and network recovery patterns.
 
-### 7. Delay rates vary across days of the week
-Weekday delay-rate analysis shows that arrival delay behavior is not evenly distributed:
+### 7. Regression Analysis
+- We present 3 Regression plots aggregating factors of month, carrier and airport.
+- Random Forest Regression is the most insightful (R^2 = 0.73). In contrast, Linear and  XGBoost regression are less conclusive. Yet, XGBoost agrees with Random Forest
+- Airport is the most related to flight delay. And carrrier is the second most related factor. 
 
-- **Tuesday** has the highest share of flights delayed more than **15 minutes** (**14.1%**) and more than **30 minutes** (**10.3%**)
-- **Friday** is also elevated:
-  - **13.6%** delayed > 15 min
-  - **9.2%** delayed > 30 min
-- **Sunday** performs best:
-  - **10.8%** delayed > 15 min
-  - **7.1%** delayed > 30 min
-
-This suggests weekday traffic and scheduling structure may meaningfully influence arrival reliability.
 
 ---
 
@@ -207,11 +212,17 @@ The project generates several visual outputs, including:
 - **Monthly delay trend**
   - shows seasonal concentration of delays
 
-- **Weekday arrival delay rate**
-  - compares share of flights delayed more than 15 or 30 minutes
-
 - **Arrival delay breakdown by day**
   - compares early, on-time, minor, moderate, and severe arrival outcomes
 
 - **Airport performance comparison**
   - compares busy airports by delay rate, average duration, traffic volume, and dominant cause
+ 
+- **Regression analysis**
+  - compares the significance of airport, carrier, and month related to the flight delay.
+
+## Conclusion
+- Late aircraft, carrier operations, and NAS delays are the dominant contributors to flight delays.
+- Flight delay shows strong seasonal patterns.
+- Carrier performance vary significant.
+- Airport is the the most influential factors for flight delay based on our regression results.
