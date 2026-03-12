@@ -90,7 +90,7 @@ ECE143-WI26-G7/
 
 
 ### How to Run Our Code
-1. Install all the packages listed in requirements.txt.
+1. Install all the packages listed in **`requirements.txt`**.
 2. Run the **`main_analysis.ipynb`** to generate all the analysis.
 ---
 
